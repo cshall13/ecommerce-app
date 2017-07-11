@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="PROJECT" libraries="{jsx-chai-DefinitelyTyped, node-DefinitelyTyped, react-DefinitelyTyped, react-dom-DefinitelyTyped, react-redux-DefinitelyTyped, reduce-reducers-DefinitelyTyped, redux-action-DefinitelyTyped}" />
+    <excludedPredefinedLibrary name="redux-101/node_modules" />
+  </component>
+</project>
