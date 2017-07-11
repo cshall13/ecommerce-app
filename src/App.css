@@ -2,23 +2,72 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.main{
+  margin-top: 30px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.float-right{
+    float: right;
 }
 
-.App-intro {
-  font-size: large;
+.dropdown{
+    position: relative;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.dropdown .dropdown-links{
+    display: none;
 }
+
+.dropdown:hover .dropdown-links{
+    display: block;
+}
+
+.dropdown-links a{
+    display: block;
+    position: absolute;
+    left: 20px;
+    background-color: #f8f8f8;
+    border:1px solid #999;
+    width: 150px;
+    text-align: left;
+    color: #777;
+}
+
+.dropdown-links a:nth-child(1){
+    top: 40px;
+}
+
+.dropdown-links a:nth-child(2) {
+    top: 60px;
+}
+
+.dropdown-links a:nth-child(3) {
+    top: 80px;
+}
+
+.dropdown-links a:nth-child(4) {
+    top: 100px;
+}
+
+.dropdown-links a:nth-child(5) {
+    top: 120px;
+}
+
+.dropdown-links a:nth-child(6) {
+    top: 140px;
+}
+
+.dropdown-links:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.navbar-white{
+    background-color: white;
+}
+
+.slick-image{
+    z-index: -1;
+}
+
+

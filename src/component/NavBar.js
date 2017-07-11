@@ -12,14 +12,16 @@ class NavBar extends Component{
 			    	<li><Link to="/">Home</Link></li>
 			      	<li className="dropdown">
 			      		<Link to="/shop"><i className="arrow down" /> Shop</Link>
-			      		<li className="dropdown-links">
-			      			<Link to="/shop/cars">Cars</Link>
-			      			<Link to="/shop/motorcycles">Motorcycles</Link>
-			      			<Link to="/shop/planes">Planes</Link>
-			      			<Link to="/shop/ships">Ships</Link>
-			      			<Link to="/shop/trains">Trains</Link>
-			      			<Link to="/shop/trucks-buses">Trucks/Buses</Link>
-			      		</li>
+						<ul>
+							<li className="dropdown-links">
+								<Link to="/shop/cars">Cars</Link>
+								<Link to="/shop/motorcycles">Motorcycles</Link>
+								<Link to="/shop/planes">Planes</Link>
+								<Link to="/shop/ships">Ships</Link>
+								<Link to="/shop/trains">Trains</Link>
+								<Link to="/shop/trucks-buses">Trucks/Buses</Link>
+							</li>
+						</ul>
 			      	</li>
 			      	<li><Link to="/about">About Us</Link></li>
 			      	<li><Link to="/contact">Contact Us</Link></li>
