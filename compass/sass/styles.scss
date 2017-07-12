@@ -1,0 +1,32 @@
+
+@import 'variables';
+@import 'homemade_grid';
+@import 'header';
+@import 'footer';
+
+h1{
+	color: $blue;
+	font-size: 80px;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+.box { 
+	@include border-radius(10px);
+	border: 2px solid black;
+	width: 100px;
+ }
+
+@mixin main-body-font(){
+ 	font-family: Helvetica Veranda Serif;
+ 	color: #fff0f0;
+ 	line-height: 20px;
+ 	font-size: 14px;
+ 	vertical-align: middle;
+ }
+

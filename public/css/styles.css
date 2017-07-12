@@ -1,0 +1,82 @@
+/* line 4, ../../compass/sass/_homemade_grid.scss */
+.container {
+  widows: 100%;
+  margin: auto;
+}
+
+/* line 8, ../../compass/sass/_homemade_grid.scss */
+.col-1 {
+  width: 8.33333%;
+  float: left;
+}
+
+/* line 12, ../../compass/sass/_homemade_grid.scss */
+.col-2 {
+  width: 8.33333%;
+  float: left;
+}
+
+/* line 17, ../../compass/sass/_homemade_grid.scss */
+.col-6 {
+  width: 8.33333%;
+  float: left;
+}
+
+/* line 2, ../../compass/sass/_header.scss */
+ul li {
+  color: #d1d2d4;
+}
+/* line 4, ../../compass/sass/_header.scss */
+ul li a {
+  color: #a1ffa4;
+}
+
+/* line 10, ../../compass/sass/_header.scss */
+a {
+  text-decoration: none;
+}
+/* line 12, ../../compass/sass/_header.scss */
+a h1 {
+  color: #d2d4d5;
+  font-size: 30px;
+}
+
+/* line 6, ../../compass/sass/_footer.scss */
+.main {
+  background: blue;
+}
+/* line 8, ../../compass/sass/_footer.scss */
+.main li {
+  font-size: 1px;
+}
+
+/* line 13, ../../compass/sass/_footer.scss */
+.container {
+  font-size: 14px;
+}
+/* line 15, ../../compass/sass/_footer.scss */
+.container li {
+  list-style: none;
+  font-size: 15px;
+}
+/* line 18, ../../compass/sass/_footer.scss */
+.container li a {
+  text-decoration: none;
+}
+
+/* line 7, ../../compass/sass/styles.scss */
+h1 {
+  color: #0caaff;
+  font-size: 80px;
+}
+
+/* line 19, ../../compass/sass/styles.scss */
+.box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 100px;
+}
+

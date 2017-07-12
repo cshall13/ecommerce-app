@@ -1,0 +1,21 @@
+// Homemade Bootstrap Grid
+$containerWidth: 100%;
+
+.container{
+	widows: $containerWidth;
+	margin: auto;
+}
+.col-1{
+	width: $containerWidth/12;
+	float: left;
+}
+.col-2{
+	width: $containerWidth/12;
+	float: left;
+
+}
+.col-6{
+	width: $containerWidth/12;
+	float: left;
+
+}

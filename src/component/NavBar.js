@@ -1,9 +1,39 @@
 import React, {Component} from 'react'
 import {Link, Route} from 'react-router-dom'
 import Slick from './Slick'
+import $ from 'jquery';
 
 class NavBar extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            productlines: []
+        }
+    }
+    componentDidMount(){
+        // go get all productlines from the database
+        // hostAddress variable is set up in index.html as a script tag in the body
+        $.getJSON(window.hostAddress+'/productlines/get',(productlinesData)=>{
+            console.log(productlinesData);
+            this.setState({
+                productlines: productlinesData
+            })
+        })
+    }
+
   render(){
+        // temp var to serve our link
+      const shopMenu = [];
+      // map through this.state.productlines. First render, will not loop (because
+      // pl is an object of 'this.state.productlines' which is an empty array
+      this.state.productlines.map((pl,index)=>{
+          shopMenu.push(
+              <Link key={index} to={`/shop/${pl.link}`}>{pl.productLine}</Link>
+          )
+      });
+
+
+
     return(
     	<div>
 			<nav className="navbar navbar-default navbar-fixed-top">
@@ -14,12 +44,9 @@ class NavBar extends Component{
 			      		<Link to="/shop"><i className="arrow down" /> Shop</Link>
 						<ul>
 							<li className="dropdown-links">
-								<Link to="/shop/cars">Cars</Link>
-								<Link to="/shop/motorcycles">Motorcycles</Link>
-								<Link to="/shop/planes">Planes</Link>
-								<Link to="/shop/ships">Ships</Link>
-								<Link to="/shop/trains">Trains</Link>
-								<Link to="/shop/trucks-buses">Trucks/Buses</Link>
+                                {/*the links were all hardcoded here. we created an array above in shopMenu and */}
+                                {/*dropped that in here*/}
+                                {shopMenu}
 							</li>
 						</ul>
 			      	</li>

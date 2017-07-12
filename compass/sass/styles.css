@@ -1,0 +1,53 @@
+.container {
+  widows: 100%;
+  margin: auto; }
+
+.col-1 {
+  width: 8.33333%;
+  float: left; }
+
+.col-2 {
+  width: 8.33333%;
+  float: left; }
+
+.col-6 {
+  width: 8.33333%;
+  float: left; }
+
+ul li {
+  color: #d1d2d4; }
+  ul li a {
+    color: #a1ffa4; }
+
+a {
+  text-decoration: none; }
+  a h1 {
+    color: #d2d4d5;
+    font-size: 30px; }
+
+.main {
+  background: blue; }
+  .main li {
+    font-size: 1px; }
+
+.container {
+  font-size: 14px; }
+  .container li {
+    list-style: none;
+    font-size: 15px; }
+    .container li a {
+      text-decoration: none; }
+
+h1 {
+  color: #0caaff;
+  font-size: 80px; }
+
+.box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 100px; }
+
+/*# sourceMappingURL=styles.css.map */

@@ -57,6 +57,10 @@
     top: 140px;
 }
 
+.dropdown-links a:nth-child(7) {
+    top: 160px;
+}
+
 .dropdown-links:hover {
     color: black;
     text-decoration: none;
@@ -68,6 +72,10 @@
 
 .slick-image{
     z-index: -1;
+}
+
+.slick-image img{
+    width: 100vw;
 }
 
 
