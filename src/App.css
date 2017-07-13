@@ -78,4 +78,11 @@
     width: 100vw;
 }
 
+.register-wrapper{
+    margin-top: 100px;
+}
+
+body, html {
+ overflow-x: hidden;
+}
 

@@ -25,6 +25,9 @@ a {
     color: #d2d4d5;
     font-size: 30px; }
 
+.register-wrapper {
+  margin-top: 100px; }
+
 .main {
   background: blue; }
   .main li {
