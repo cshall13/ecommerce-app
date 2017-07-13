@@ -5,7 +5,7 @@
 api/node_modules
 api/config
 .sass-cache
-
+/public/config.js
 
 # testing
 /coverage
@@ -27,3 +27,4 @@ yarn-error.log*
 
 api/public/images/
 api/public/javascripts/
+public/config.js

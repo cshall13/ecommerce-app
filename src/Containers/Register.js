@@ -14,6 +14,7 @@ class Register extends Component{
         this.handleRegistration = this.handleRegistration.bind(this);
     }
 
+// this is an internal class/component based function
     handleRegistration(event){
         event.preventDefault();
         console.log("user submitted the form");
@@ -25,7 +26,17 @@ class Register extends Component{
         var state = event.target[5].value;
         var salesRep = event.target[6].value;
         console.log(name)
-        this.props.registerAction();
+        // this is set up as a single object and we can call it whatever we want in
+        //     in the function in 'RegisterAction.js'
+        this.props.registerAction({
+            name: name,
+            email: email,
+            accountType: accountType,
+            password: password,
+            city: city,
+            state: state,
+            salesRep: salesRep
+        });
     }
 
     render() {
@@ -100,7 +111,8 @@ class Register extends Component{
         )
     }
 }
-
+// this is not part of the class bc the class itself is a react component
+// this is a redux module
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
         // the left is the prop, the right is the file
