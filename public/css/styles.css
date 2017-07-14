@@ -41,6 +41,11 @@ a h1 {
   font-size: 30px;
 }
 
+/* line 18, ../../compass/sass/_header.scss */
+.register-wrapper {
+  margin-top: 100px;
+}
+
 /* line 6, ../../compass/sass/_footer.scss */
 .main {
   background: blue;
@@ -79,4 +84,3 @@ h1 {
   border: 2px solid black;
   width: 100px;
 }
-

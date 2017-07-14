@@ -76,6 +76,7 @@
 
 .slick-image img{
     width: 100vw;
+    margin-top: 80px;
 }
 
 .register-wrapper{
@@ -84,5 +85,9 @@
 
 body, html {
  overflow-x: hidden;
+}
+
+.user-message{
+    color: red;
 }
 

@@ -1,6 +1,3 @@
-// this is our master reducer.... the root reducer
-// the reducers hold pieces of state. the root reducer holds all the reducers.
-//     I.E. the rootReducer holds ALL pieces of state, or application state.
 
 
 // We need to get the combineReducers method from redux, to make a rootReducer
@@ -9,8 +6,8 @@
 import { combineReducers } from 'redux';
 
 // import each reducer here.
-    // First: import the studentReducer
-import StudentReducer from './StudentReducer';
+    // First: import the RegisterReducer
+import RegisterReducer from './RegisterReducer';
 
 
 // create a rootReducer using the combineReducer method, so we can export it
@@ -18,7 +15,7 @@ import StudentReducer from './StudentReducer';
 const rootReducer = combineReducers({
     // inside here we pass each reducer as a key/value
     // each key will be available as a piece of state later
-    students: StudentReducer
+    registerReducer: RegisterReducer
 });
 
 export default rootReducer;

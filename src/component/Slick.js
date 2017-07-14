@@ -23,8 +23,6 @@ class Slick extends Component{
                     <div className="slick-image"><img src="/images/train1.jpg" /></div>
                     <div className="slick-image"><img src="/images/lamb.jpg" /></div>
                     <div className="slick-image"><img src="/images/schooner.jpg" /></div>
-                    <div className="slick-image"><img src="/images/harley.jpg" /></div>
-                    <div className="slick-image"><img src="/images/chevy-deluxe-coupe.jpg" /></div>
                 </Slider>
             </div>
         )
