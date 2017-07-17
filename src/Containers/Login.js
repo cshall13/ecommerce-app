@@ -49,7 +49,7 @@ class Login extends Component{
 				passwordError: passwordError
 			})
 		}else{
-			this.props.loginAction({
+			this.props.LoginAction({
 				email: email,
 				password: password,
 			});
@@ -61,7 +61,7 @@ class Login extends Component{
 		console.log(nextProps.registerResponse)
 		console.log("=======================")
 
-		if(nextProps.registerResponse.msg === 'userInserted'){
+		if(nextProps.registerResponse.msg === 'loginSuccess'){
 			this.props.history.push('/');
 		}else if(nextProps.registerResponse.msg === 'userAlreadyExists'){
 			console.log("User name taken!")

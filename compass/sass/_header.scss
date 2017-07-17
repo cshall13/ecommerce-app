@@ -18,3 +18,10 @@ a{
 .register-wrapper{
 	margin-top: 100px;
 }
+
+//$menu_links: 8;
+//@for $i from 0 to $menu_links{
+//    .dropdown-links a:nth-child(#{$i}){
+//        top: 15 + ($i * 20)+px
+//    }
+//}

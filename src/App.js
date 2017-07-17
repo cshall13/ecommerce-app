@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'; //(npm install - - save react-router-dom)
+import {BrowserRouter as Router, Route} from 'react-router-dom'; //(npm install - - save react-router-dom)
 import NavBar from './Containers/NavBar';
 import Home from './Containers/Home';
 import Register from './Containers/Register';
 import Login from './Containers/Login';
+import Slick from './component/Slick';
+
 
 
 
 class App extends Component {
   render() {
     return (
+        // router manages url and makes single page app functional
       <Router>
           <div className="App">
               <NavBar/>
+              <Route exact path="/" component={Slick} />
               <div className="container main">
                   <Route exact path="/" component={Home} />
                   <Route exact path="/Register" component={Register} />

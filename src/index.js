@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Home from './Containers/Home';
 
 
 // go get the createStore method and applyMiddleware from the redux module(npm install --save redux)
