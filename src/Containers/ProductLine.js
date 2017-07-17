@@ -6,13 +6,25 @@ class ProductLine extends Component{
     constructor(props){
         super(props);
         this.state = {
-            productList: []
-        }
+            productList: [],
+            whichWay: true
+        };
+        // make the right 'this' available to our member
+        this.sortTable = this.sortTable.bind(this);
+        this.getProducts = this.getProducts.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.getProducts(nextProps);
     }
 
     componentDidMount(){
+        this.getProducts(this.props);
+    }
+
+    getProducts(newProps){
         // console.log(this.props.match)
-        const pl = this.props.match.params.productLine;
+        const pl = newProps.match.params.productLine;
         // console.log(pl);
         // understood this is a get request '/get' is optional here
         const url = window.hostAddress + `/productlines/${pl}/get`
@@ -29,17 +41,17 @@ class ProductLine extends Component{
 
         var productList = this.state.productList.slice();
 
-        productList.sort(function(a,b){
+        productList.sort((a,b)=>{
             var textA = a[columnName];
             var textB = b[columnName];
             // this is our compare function
-            // ternar statement, after ? if true, after : if false
-            // if(textA < textB){
-            //     return -1
-            // }else if{
-            //     textA > textB;
-            // }else
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            // ternary statement, after ? if true, after : if false
+
+            if(this.state.whichWay){
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }else {
+                return (textA < textB) ? 1 : (textA > textB) ? -1 : 0;
+            }
         });
 
         this.setState({
@@ -62,7 +74,7 @@ class ProductLine extends Component{
 
         return(
             <div>
-                <h1 className="pl-header">{this.props.match.params.productLine}</h1>
+                <h1 className="pl-header">{textHeader}</h1>
                 <table className="table table-striped">
                     <thead>
                         <tr>
