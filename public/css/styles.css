@@ -69,13 +69,39 @@ a h1 {
   text-decoration: none;
 }
 
-/* line 7, ../../compass/sass/styles.scss */
+/* line 9, ../../compass/sass/styles.scss */
+.pl-images {
+  margin-bottom: 10px;
+}
+/* line 11, ../../compass/sass/styles.scss */
+.pl-images img {
+  height: 256px;
+  width: 256px;
+  border: 5px solid #e6e6e6;
+}
+/* line 15, ../../compass/sass/styles.scss */
+.pl-images img:hover {
+  border-color: #1D5E9A;
+}
+/* line 19, ../../compass/sass/styles.scss */
+.pl-images a {
+  display: block;
+  cursor: pointer;
+}
+/* line 23, ../../compass/sass/styles.scss */
+.pl-images .text {
+  color: #121212;
+  margin-bottom: 15px;
+  font-size: 32px;
+}
+
+/* line 30, ../../compass/sass/styles.scss */
 h1 {
   color: #0caaff;
   font-size: 80px;
 }
 
-/* line 19, ../../compass/sass/styles.scss */
+/* line 42, ../../compass/sass/styles.scss */
 .box {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;

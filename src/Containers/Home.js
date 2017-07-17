@@ -15,7 +15,7 @@ class Home extends Component{
     componentDidMount(){
         // get all product info...we already set this up in the NavBar
         $.getJSON(window.hostAddress+'/productlines/get',(productlinesData)=>{
-			console.log(productlinesData);
+			// console.log(productlinesData);
 			this.setState({
 				productlines: productlinesData
 			})
@@ -28,13 +28,16 @@ class Home extends Component{
         this.state.productlines.map((row, index)=>{
             plImages.push(
                 <div key={index} className="col-sm-4 col-md-3 pl-images">
-                    <Link to={`/shop/${row.link}`}><img src={row.image} /></Link>
+                    <Link className="pl-link" to={`/shop/${row.link}`}><img className="pl-icon" src={row.image} /></Link>
+                    <div className="text">
+                        {row.productLine}
+                    </div>
                 </div>
             )
         });
         return (
             <div>
-                <h1>{plImages}</h1>
+                {plImages}
             </div>
         )
     }

@@ -35,8 +35,21 @@ router.get('/productlines/get', (req, res)=>{
 	});
 });
 
+router.get('/productlines/:productLines/get',(req,res)=>{
+	// res.json({msg:"test"})
+	const pl = req.params.productLines;
+	// 'productlines' is the table 'productLines is the field'
+	var plQuery = `SELECT  * FROM productlines
+	INNER JOIN products ON productlines.productLine = products.productLine
+	WHERE link = ?`; //'?' is the same as %s in python, placeholder for var
+    connection.query(plQuery, [pl], (error, results)=>{
+        if(error) throw error;
+        res.json(results);
+    })
+});
+
 router.post('/register', (req, res)=>{
-	console.log(req.body)
+	console.log(req.body);
 
 	const name = req.body.name;
 	const email = req.body.email;

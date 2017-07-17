@@ -91,3 +91,36 @@ body, html {
     color: red;
 }
 
+.table-head{
+	color: #0000ff;
+	text-decoration: underline;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+.pl-images {
+    margin-bottom: 10px;
+}
+
+.pl-icon {
+    height: 256px;
+    width: 256px;
+    border: 5px solid #e6e6e6;
+}
+
+.pl-icon:hover{
+    border-color: #1D5E9A;
+}
+
+.pl-link{
+    display: block;
+    cursor: pointer;
+}
+.text{
+    color: #121212;
+    margin-bottom: 15px;
+    font-size: 32px;
+}
+
+
+
