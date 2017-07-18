@@ -15,6 +15,23 @@ function ProductTableRow(props){
         var inStockClass = "bg-danger";
         var inStock = 'Out of Stock!'
     }
+
+    // if the user is logged in then they will see the button
+    // if they are not logged in then they will not be offered a button
+    if(props.loggedIn){
+        var button = <button className="btn btn-primary"
+                        onClick={
+                            ()=>{
+                                // run add to cart function and send product code
+                                // addToCart(redux action) is created in productline.js line 73
+                                props.addToCart(product.productCode , props.token);
+                                console.log("Added to cart")
+                            }
+                        }
+                >Add to Cart</button>
+    }else{
+        var button = " ";
+    }
     return(
         <tr>
             <td>{product.productName}</td>
@@ -25,16 +42,7 @@ function ProductTableRow(props){
             <td>{product.buyPrice}</td>
             <td>{product.MSRP}</td>
             <td>
-                <button className="btn btn-primary"
-                        onClick={
-                            ()=>{
-                                // run add to cart function and send product code
-                                // addToCart(redux action) is created in productline.js line 73
-                                props.addToCart(product.productCode);
-                                console.log("Added to cart")
-                            }
-                        }
-                >Add to Cart</button>
+                {button}
             </td>
         </tr>
     )

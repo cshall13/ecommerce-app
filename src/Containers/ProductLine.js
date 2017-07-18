@@ -64,6 +64,19 @@ class ProductLine extends Component{
 
     render(){
 
+        console.log(this.props.loginInfo);
+        // check to see if msg = loginSuccess
+        //     is so, they are loggid in. let the ProductTableRow know
+        // if not, send appropriate props
+        if(this.props.loginInfo.token != undefined){
+            // these are the droids we're lookig for
+            var loggedIn = true;
+            var token = this.props.loginInfo.token
+        }else{
+            var loggedIn = false;
+            var token = null
+        }
+
         var productTableArray = [];
         this.state.productList.map((product, index)=>{
             productTableArray.push(
@@ -71,6 +84,8 @@ class ProductLine extends Component{
                     key={index}
                     product={product}
                     addToCart={this.props.updateCart}
+                    loggedIn={loggedIn}
+                    token={token}
                 />)
         });
 
