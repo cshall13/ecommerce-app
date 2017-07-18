@@ -132,5 +132,8 @@ body, html {
     font-family: 'Cinzel Decorative', cursive;
 }
 
+.nav.navbar-nav.float-right .text-right a{
+    display: inline;
+}
 
 

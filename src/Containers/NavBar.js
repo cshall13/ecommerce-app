@@ -22,10 +22,11 @@ class NavBar extends Component{
 	}
 
   render(){
-		console.log(this.props.cartInfo)
-	  if(this.props.cartInfo.totalPrice != undefined){
-			var totalPrice = this.props.cartInfo.totalPrice;
-			var totalItems = this.props.cartInfo.totalItems;
+		console.log(this.props.cartInfo[0])
+	  if(this.props.cartInfo[0] != undefined){
+			var totalPrice = this.props.cartInfo[0].totalPrice;
+			console.log(totalPrice);
+			var totalItems = this.props.cartInfo[0].totalItems;
 	  }else{
 	  	var totalPrice = 0;
 	  	var totalItems = 0;
