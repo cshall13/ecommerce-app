@@ -48,6 +48,28 @@ router.get('/productlines/:productLines/get',(req,res)=>{
     })
 });
 
+router.post('/getCart',(req,res)=>{
+	const getUidQuery = `SELECT id from users WHERE token = ?`;
+	connection.query(getUidQuery, [req.body.token],(error,results)=>{
+		const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, COUNT(buyPrice) as totalItems FROM cart 
+  					INNER JOIN products ON products.productCode = cart.productCode WHERE uid = ?`;
+		        connection.query(getCartTotals,[results[0].id],(results3, error3)=>{
+					if(error3){
+						res.json(error3)
+					}else{
+						const getCartContents = `SELECT * FROM cart
+						  INNER JOIN products on products.productCode = cart.productCode 
+						  WHERE uid = ?`;
+						connection.query(getCartContents,[results[0].id],(error4,results4)=>{
+							var finalCart = results3[0];
+							finalCart.products = results4;
+							res.json(finalCart);
+						})
+					}
+				});
+    })
+});
+
 router.post('/updateCart', (req, res)=>{
 	console.log(req.body);
 	const getUidQuery = `SELECT id from users WHERE token = ?`;
@@ -59,17 +81,19 @@ router.post('/updateCart', (req, res)=>{
 			})
 		}else{
 			const addToCartQuery = `INSERT INTO cart (uid, productCode) VALUES (?,?)`;
-			connection.query(addToCartQuery, [results[0].id,req.body.productCode],(error, results)=>{
-				const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, COUNT(buyPrice) as totalItems FROM cart 
-  				INNER JOIN products ON products.productCode = cart.productCode WHERE uid = ?`;
-			connection.query(getCartTotals,[results[0].id],(results3, error3)=>{
-				res.json(results3)
-			});
-				res.json({productNumber: req.body.productCode})
+			connection.query(addToCartQuery, [results[0].id,req.body.productCode],(error2, results2)=>{
+				const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
+  					INNER JOIN products ON products.productCode = cart.productCode WHERE uid =?`;
+				connection.query(getCartTotals,[results[0].id],(error3, results3)=>{
+					if(error3){
+						res.json(error3)
+					}else{
+						res.json(results3[0]);
+					}
+				});
 			})
 		}
 	});
-
 });
 
 router.post('/register', (req, res)=>{
@@ -145,7 +169,9 @@ router.post('/register', (req, res)=>{
 router.post('/login', (req,res)=> {
     var email = req.body.email;
     var password = req.body.password;
-    var checkLoginQuery = "SELECT * FROM users WHERE email = ?";
+    var checkLoginQuery = `SELECT * FROM users
+		INNER JOIN customers ON users.uid = customers.customerNumber
+		WHERE email = ?`;
     connection.query(checkLoginQuery, [email], (error, results) => {
         if (error) throw error;
         if (results.length === 0) {
@@ -165,7 +191,7 @@ router.post('/login', (req,res)=> {
                 connection.query(updateToken, [token, email], (error2, results2) => {
                     res.json({
                         msg: 'loginSuccess',
-                        name: results[0].name,
+                        name: results[0].customerName,
                         token: token
                     })
                 })

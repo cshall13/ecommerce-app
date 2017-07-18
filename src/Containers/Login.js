@@ -4,6 +4,7 @@ import { Form, FormGroup, ControlLabel, FormControl, Button, Col ,MenuItem} from
 import  {bindActionCreators} from 'redux';
 // Get the registerAction function which runs on submission
 import LoginAction from '../actions/LoginAction';
+import GetCart from '../actions/GetCart';
 // Because this is a container, we need connect from react-redux!
 import {connect} from 'react-redux';
 
@@ -57,11 +58,12 @@ class Login extends Component{
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log("=======================")
-		console.log(nextProps.registerResponse)
-		console.log("=======================")
+		// console.log("=======================")
+		// console.log(nextProps.registerResponse)
+		// console.log("=======================")
 
 		if(nextProps.registerResponse.msg === 'loginSuccess'){
+			this.props.getCart(nextProps.registerResponse.token)
 			this.props.history.push('/');
 		}else if(nextProps.registerResponse.msg === 'userAlreadyExists'){
 			console.log("User name taken!")
@@ -115,7 +117,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		LoginAction: LoginAction
+		LoginAction: LoginAction,
+		getCart: GetCart
 	}, dispatch)
 }
 

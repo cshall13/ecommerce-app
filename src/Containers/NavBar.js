@@ -17,12 +17,19 @@ class NavBar extends Component{
 			// console.log(productlinesData);
 			this.setState({
 				productlines: productlinesData
-			})
-		})
+			});
+		});
 	}
 
   render(){
 		console.log(this.props.cartInfo)
+	  if(this.props.cartInfo.totalPrice != undefined){
+			var totalPrice = this.props.cartInfo.totalPrice;
+			var totalItems = this.props.cartInfo.totalItems;
+	  }else{
+	  	var totalPrice = 0;
+	  	var totalItems = 0;
+	  }
   	// Temp var to store our <link>
   	const shopMenu = [];
   	// Map through this.state.productlines. First render, will not loop (because array is empty)
@@ -42,7 +49,7 @@ class NavBar extends Component{
 	}else{
 		var rightBar = [
 			<li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
-			<li key="2" className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>,
+			<li key="2" className="text-right"><Link to="/cart">({totalItems}) items | (${totalPrice})</Link></li>,
 			<li key="3" className="text-right"><Link to="/logout">Logout</Link></li>
 		]		
 	}
