@@ -48,6 +48,10 @@ router.get('/productlines/:productLines/get',(req,res)=>{
     })
 });
 
+router.post('/updateCart', (req, res)=>{
+	res.json({productNumber: req.body.productCode})
+});
+
 router.post('/register', (req, res)=>{
 	console.log(req.body);
 
@@ -148,7 +152,7 @@ router.post('/login', (req,res)=> {
             } else {
                 // these arent the droids you are looking for.
                 //     you dont want to sell me death sticks
-                //     you want to go home and rethink youre life
+                //     you want to go home and rethink your life
                 res.json({
                     msg: 'wrongPassword'
                 })

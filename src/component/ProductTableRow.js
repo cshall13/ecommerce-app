@@ -24,8 +24,20 @@ function ProductTableRow(props){
             <td className={inStockClass}>{inStock}</td>
             <td>{product.buyPrice}</td>
             <td>{product.MSRP}</td>
+            <td>
+                <button className="btn btn-primary"
+                        onClick={
+                            ()=>{
+                                // run add to cart function and send product code
+                                // addToCart(redux action) is created in productline.js line 73
+                                props.addToCart(product.productCode);
+                                console.log("Added to cart")
+                            }
+                        }
+                >Add to Cart</button>
+            </td>
         </tr>
     )
 }
 
-export default ProductTableRow;
+export default ProductTableRow

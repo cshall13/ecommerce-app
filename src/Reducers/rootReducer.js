@@ -9,13 +9,16 @@ import { combineReducers } from 'redux';
     // First: import the RegisterReducer
 import RegisterReducer from './RegisterReducer';
 
+import CartReducer from './CartReducer';
+
 
 // create a rootReducer using the combineReducer method, so we can export it
 // to the store in index.js
 const rootReducer = combineReducers({
     // inside here we pass each reducer as a key/value
     // each key will be available as a piece of state later
-    registerReducer: RegisterReducer
+    registerReducer: RegisterReducer,
+    cartReducer: CartReducer
 });
 
 export default rootReducer;

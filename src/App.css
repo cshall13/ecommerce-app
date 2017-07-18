@@ -92,10 +92,14 @@ body, html {
 }
 
 .table-head{
-	color: #0000ff;
-	text-decoration: underline;
+	color: steelblue;
+	/*text-decoration: underline;*/
 	cursor: pointer;
 	font-size: 18px;
+}
+
+.table-head:hover{
+    color: lightblue;
 }
 
 .pl-images {
@@ -117,6 +121,7 @@ body, html {
     cursor: pointer;
 }
 .text{
+    font-family: 'Racing Sans One', cursive;
     color: #121212;
     margin-bottom: 15px;
     font-size: 32px;
@@ -124,6 +129,7 @@ body, html {
 
 .pl-header{
     margin-top: 90px;
+    font-family: 'Cinzel Decorative', cursive;
 }
 
 

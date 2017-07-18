@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import $ from'jquery';
 import ProductTableRow from '../component/ProductTableRow';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import UpdateCart from '../actions/UpdateCart';
 
 class ProductLine extends Component{
     constructor(props){
@@ -63,7 +66,12 @@ class ProductLine extends Component{
 
         var productTableArray = [];
         this.state.productList.map((product, index)=>{
-            productTableArray.push(<ProductTableRow key={index} product={product} />)
+            productTableArray.push(
+                <ProductTableRow
+                    key={index}
+                    product={product}
+                    addToCart={this.props.updateCart}
+                />)
         });
 
         if(this.state.productList.length === 0){
@@ -96,4 +104,17 @@ class ProductLine extends Component{
     }
 }
 
-export default ProductLine;
+function mapStateToProps(state){
+    return{
+        loginInfo: state.registerReducer
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({
+        updateCart: UpdateCart
+    },dispatch)
+}
+
+// export default ProductLine;
+export default connect(mapStateToProps, mapDispatchToProps)(ProductLine);
