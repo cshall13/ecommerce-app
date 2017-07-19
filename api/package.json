@@ -15,6 +15,7 @@
     "morgan": "~1.8.1",
     "mysql": "^2.13.0",
     "rand-token": "^0.3.0",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "stripe": "^4.23.1"
   }
 }

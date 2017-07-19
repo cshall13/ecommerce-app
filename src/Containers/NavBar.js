@@ -22,11 +22,10 @@ class NavBar extends Component{
 	}
 
   render(){
-		console.log(this.props.cartInfo[0])
-	  if(this.props.cartInfo[0] != undefined){
-			var totalPrice = this.props.cartInfo[0].totalPrice;
-			console.log(totalPrice);
-			var totalItems = this.props.cartInfo[0].totalItems;
+		console.log(this.props.cartInfo);
+	  if(this.props.cartInfo != undefined){
+			var totalPrice = this.props.cartInfo.totalPrice;
+			var totalItems = this.props.cartInfo.totalItems;
 	  }else{
 	  	var totalPrice = 0;
 	  	var totalItems = 0;
@@ -50,7 +49,11 @@ class NavBar extends Component{
 	}else{
 		var rightBar = [
 			<li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
-			<li key="2" className="text-right"><Link to="/cart">({totalItems}) items | (${totalPrice})</Link></li>,
+			<li key="2" className="text-right">
+				<Link to="/cart">
+					<span className = " glyphicon glyphicon-shopping-cart " aria-hidden =" true " > ({ totalItems }) items | (${totalPrice})</span>
+				</Link>
+			</li>,
 			<li key="3" className="text-right"><Link to="/logout">Logout</Link></li>
 		]		
 	}

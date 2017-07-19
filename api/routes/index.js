@@ -7,7 +7,9 @@ var config = require('../config/config');
 // include bcrpyt for hasing and checking password
 var bcrypt = require('bcrypt-nodejs');
 // include rand-token for generating user token
-var randToken = require('rand-token')
+var randToken = require('rand-token');
+
+var stripe = require('stripe')(config.stripeKey);
 
 // set up the connection with options
 var connection = mysql.createConnection({
@@ -51,16 +53,18 @@ router.get('/productlines/:productLines/get',(req,res)=>{
 router.post('/getCart',(req,res)=>{
 	const getUidQuery = `SELECT id from users WHERE token = ?`;
 	connection.query(getUidQuery, [req.body.token],(error,results)=>{
-		const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, COUNT(buyPrice) as totalItems FROM cart 
-  					INNER JOIN products ON products.productCode = cart.productCode WHERE uid = ?`;
-		        connection.query(getCartTotals,[results[0].id],(results3, error3)=>{
-					if(error3){
+		var getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
+            INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?;`;
+		console.log(results[0].id);
+		        connection.query(getCartTotals,[results[0].id],(error3, results3)=>{
+					if(error3) {
 						res.json(error3)
 					}else{
 						const getCartContents = `SELECT * FROM cart
 						  INNER JOIN products on products.productCode = cart.productCode 
 						  WHERE uid = ?`;
 						connection.query(getCartContents,[results[0].id],(error4,results4)=>{
+							console.log(results3[0]);
 							var finalCart = results3[0];
 							finalCart.products = results4;
 							res.json(finalCart);
@@ -205,6 +209,33 @@ router.post('/login', (req,res)=> {
             }
         }
     })
+});
+
+router.post('/stripe', (req,res)=>{
+	var userToken = req.body.token;
+	var stripeToken = req.body.stripeToken;
+	var amount = req.body.amount;
+	// stripe module(imported at top), which is associated with our secret key
+	// has a create method, which takes an object of options to charge
+	stripe.charges.create({
+		amount: amount,
+		currency: 'usd',
+		source: stripeToken,
+		description: "Charges for classicModels", //you can add all checkout info with a query here if you want
+	},(error, charge)=>{
+		if(error){
+			res.json({
+				msg: error
+			})
+		}else{
+			// insert stuff from cart that was just paid into:
+			// - orders
+			// - orderdetails
+			res.json({
+				msg: 'paymentSuccess'
+			})
+		}
+	})
 });
 
 module.exports = router;

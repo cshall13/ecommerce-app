@@ -4,9 +4,14 @@ import {bindActionCreators} from 'redux';
 import GetCart from '../actions/GetCart';
 import ProductTableRow from '../component/ProductTableRow';
 import $ from 'jquery';
+import {Link} from 'react-router-dom';
 
 
 class Cart extends Component{
+    constructor(props){
+        super(props);
+        this.makePayment = this.makePayment.bind(this);
+    }
 
     componentDidMount(){
         if(this.props.loginInfo.token !== undefined){
@@ -21,10 +26,11 @@ class Cart extends Component{
             key: 'pk_test_QQmahuQL0QUgjAheFobNmmvW',
             locale: 'auto',
             token: (token) => {
+                console.log(token)
                 var theData = {
-                    amount: 10 * 100,
+                    amount: this.props.cartInfo.totalPrice * 100,
                     stripeToken: token.id,
-                    userToken: this.props.tokenData,
+                    userToken: this.props.loginInfo.token,
                 }
                 $.ajax({
                     method: 'POST',
@@ -33,7 +39,7 @@ class Cart extends Component{
                 }).done((data) => {
                     console.log(data);
                     if (data.msg === 'paymentSuccess') {
-
+                        this.props.history.push('/thank-you');
                     }
                 });
             }
@@ -41,11 +47,22 @@ class Cart extends Component{
         handler.open({
             name: "Pay Now",
             description: 'Pay Now',
-            amount: 10 * 100
+            amount: this.props.cartInfo.totalPrice * 100
         })
     }
 
     render(){
+
+        if(this.props.cartInfo.products === undefined){
+            return(
+                <div>
+                    <h3 className="cart-message">
+                        Your cart is empty. Get shopping or <Link to="/login">Login.</Link>
+                    </h3>
+                </div>
+            )
+        }
+
         var cartArray = [];
         console.log(this.props.cartInfo);
         if(this.props.cartInfo.products != undefined) {
@@ -66,9 +83,10 @@ class Cart extends Component{
         console.log(this.props.cartInfo);
         return(
             <div>
-                <div>
-                    <button className="btn btn-primary" onClick={this.makePayment()}>
-                        Pay Now!
+                <div className="pay-now">
+                    Your order total is: ${this.props.cartInfo.totalPrice}
+                    <button className="btn btn-primary" onClick={this.makePayment}>
+                        <span className="glyphicon glyphicon-shopping-cart" aria-hidden="true">Pay Now!</span>
                     </button>
                 </div>
                 {cartArray}

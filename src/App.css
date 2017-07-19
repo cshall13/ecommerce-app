@@ -70,6 +70,12 @@
     background-color: white;
 }
 
+.navbar-brand{
+    font-size: 30px;
+    font-family: 'Orbitron', sans-serif;
+    color: steelblue !important;
+}
+
 .slick-image{
     z-index: -1;
 }
@@ -134,6 +140,14 @@ body, html {
 
 .nav.navbar-nav.float-right .text-right a{
     display: inline;
+}
+
+.cart-message{
+    margin-top: 80px;
+}
+
+.pay-now{
+    margin-top: 80px;
 }
 
 
