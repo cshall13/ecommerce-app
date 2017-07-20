@@ -26,12 +26,12 @@ class Cart extends Component{
             key: 'pk_test_QQmahuQL0QUgjAheFobNmmvW',
             locale: 'auto',
             token: (token) => {
-                console.log(token)
+                console.log(token);
                 var theData = {
                     amount: this.props.cartInfo.totalPrice * 100,
                     stripeToken: token.id,
                     userToken: this.props.loginInfo.token,
-                }
+                };
                 $.ajax({
                     method: 'POST',
                     url: window.hostAddress+'/stripe',
@@ -65,9 +65,9 @@ class Cart extends Component{
 
         var cartArray = [];
         console.log(this.props.cartInfo);
-        if(this.props.cartInfo.products != undefined) {
+        if(this.props.cartInfo.products !== undefined) {
             this.props.cartInfo.products.map((product, index) => {
-                console.log(product)
+                console.log(product);
                 cartArray.push(
                     <ProductTableRow
                         key={index}
@@ -86,6 +86,7 @@ class Cart extends Component{
                 <div className="pay-now">
                     Your order total is: ${this.props.cartInfo.totalPrice}
                     <button className="btn btn-primary" onClick={this.makePayment}>
+                        Checkout!
                     </button>
                 </div>
                 {cartArray}

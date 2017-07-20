@@ -7,9 +7,10 @@ var config = require('../config/config');
 // include bcrpyt for hasing and checking password
 var bcrypt = require('bcrypt-nodejs');
 // include rand-token for generating user token
-var randToken = require('rand-token');
+var randToken = require('rand-token')
 
 var stripe = require('stripe')(config.stripeKey);
+
 
 // set up the connection with options
 var connection = mysql.createConnection({
@@ -37,71 +38,69 @@ router.get('/productlines/get', (req, res)=>{
 	});
 });
 
-router.get('/productlines/:productLines/get',(req,res)=>{
+router.get('/productlines/:productLines/get', (req, res)=>{
 	// res.json({msg:"test"})
 	const pl = req.params.productLines;
-	// 'productlines' is the table 'productLines is the field'
-	var plQuery = `SELECT  * FROM productlines
-	INNER JOIN products ON productlines.productLine = products.productLine
-	WHERE link = ?`; //'?' is the same as %s in python, placeholder for var
-    connection.query(plQuery, [pl], (error, results)=>{
-        if(error) throw error;
-        res.json(results);
-    })
+	var plQuery = `SELECT * from productlines
+		INNER JOIN products ON productlines.productLine = products.productLine
+		WHERE link = ?`
+	connection.query(plQuery, [pl], (error, results)=>{
+		if (error) throw error;
+		res.json(results);
+	})
 });
 
-router.post('/getCart',(req,res)=>{
-	const getUidQuery = `SELECT id from users WHERE token = ?`;
-	connection.query(getUidQuery, [req.body.token],(error,results)=>{
-		var getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
-            INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?;`;
-		console.log(results[0].id);
-		        connection.query(getCartTotals,[results[0].id],(error3, results3)=>{
-					if(error3) {
-						res.json(error3)
-					}else{
-						const getCartContents = `SELECT * FROM cart
-						  INNER JOIN products on products.productCode = cart.productCode 
-						  WHERE uid = ?`;
-						connection.query(getCartContents,[results[0].id],(error4,results4)=>{
-							console.log(results3[0]);
-							var finalCart = results3[0];
-							finalCart.products = results4;
-							res.json(finalCart);
-						})
-					}
-				});
-    })
-});
+router.post('/getCart',(req, res)=>{
+	const getUidQuery = `SELECT id from users WHERE token = ?`
+	connection.query(getUidQuery,[req.body.token],(error,results)=>{
+		const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
+			INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?`
+		connection.query(getCartTotals,[results[0].id],(error3,results3)=>{
+			if(error3){
+				res.json(error3)
+			}else{
+				const getCartContents = `SELECT * FROM cart
+				INNER JOIN products on products.productCode = cart.productCode 
+				WHERE uid = ?`
+				connection.query(getCartContents,[results[0].id],(error4,results4)=>{
+					var finalCart = results3[0];
+					finalCart.products = results4
+					res.json(finalCart);
+				})
+			}
+		})
+
+	})
+})
 
 router.post('/updateCart', (req, res)=>{
-	console.log(req.body);
-	const getUidQuery = `SELECT id from users WHERE token = ?`;
-	connection.query(getUidQuery, [req.body.token],(error,results)=>{
+	console.log(req.body)
+	const getUidQuery = `SELECT id from users WHERE token = ?`
+	connection.query(getUidQuery,[req.body.token],(error,results)=>{
 		if(error) throw error;
-		if(results.length === 0){
-			res.json({
-				msg: "badToken"
-			})
+		if(results.length == 0 ){
+			res.json({msg:"badToken"})
 		}else{
-			const addToCartQuery = `INSERT INTO cart (uid, productCode) VALUES (?,?)`;
-			connection.query(addToCartQuery, [results[0].id,req.body.productCode],(error2, results2)=>{
+			const addToCartQuery = `INSERT INTO cart (uid,productCode) 
+				VALUES (?,?)`;
+			connection.query(addToCartQuery,[results[0].id,req.body.productCode],(error2,results2)=>{
 				const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
-  					INNER JOIN products ON products.productCode = cart.productCode WHERE uid =?`;
-				connection.query(getCartTotals,[results[0].id],(error3, results3)=>{
+					INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?`
+				connection.query(getCartTotals,[results[0].id],(error3,results3)=>{
 					if(error3){
 						res.json(error3)
 					}else{
 						res.json(results3[0]);
 					}
-				});
+				})
 			})
 		}
 	});
+
 });
 
 router.post('/register', (req, res)=>{
-	console.log(req.body);
+	console.log(req.body)
 
 	const name = req.body.name;
 	const email = req.body.email;
@@ -129,7 +128,7 @@ router.post('/register', (req, res)=>{
 				resolve();
 			}
 		})
-	})
+	});
 
 	checkEmail.then(
 		// Customers insert query
@@ -170,110 +169,148 @@ router.post('/register', (req, res)=>{
 
 });
 
-router.post('/login', (req,res)=> {
-    var email = req.body.email;
-    var password = req.body.password;
-    var checkLoginQuery = `SELECT * FROM users
+router.post('/login', (req, res)=>{
+	var email = req.body.email;
+	var password = req.body.password;
+	var checkLoginQuery = `SELECT * FROM users 
 		INNER JOIN customers ON users.uid = customers.customerNumber
 		WHERE email = ?`;
-    connection.query(checkLoginQuery, [email], (error, results) => {
-        if (error) throw error;
-        if (results.length === 0) {
-            // this email isnt in the database
-            res.json({
-                msg: 'badUserName'
-            })
-        } else {
-            // the username is valid. see if the pw is
-            var checkHash = bcrypt.compareSync(password, results[0].password);
-            // checkHash will be true or false
-            if (checkHash) {
-                // this is the droid we're looking for
-                // log them in IE create a token, update it, send it back(to react as JSON)
-                const updateToken = `UPDATE users SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE email=?`;
-                var token = randToken.uid(40);
-                connection.query(updateToken, [token, email], (error2, results2) => {
-                    res.json({
-                        msg: 'loginSuccess',
-                        name: results[0].customerName,
-                        token: token
-                    })
-                })
-            } else {
-                // these arent the droids you are looking for.
-                //     you dont want to sell me death sticks
-                //     you want to go home and rethink your life
-                res.json({
-                    msg: 'wrongPassword'
-                })
-            }
-        }
-    })
+	connection.query(checkLoginQuery, [email], (error,results)=>{
+		if(error) throw error;
+		if(results.length === 0){
+			// This email aint in the database
+			res.json({
+				msg: 'badUserName'
+			});
+		}else{
+			// The username is valid. See if the password is...
+			var checkHash = bcrypt.compareSync(password, results[0].password);
+			// checkHash will be true or false.
+			if(checkHash){
+				// this is teh droid we're looking for
+				// Log them in... i.e, create a token, update it, send it back
+				const updateToken = `Update users SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR)
+					WHERE email=?`
+				var token = randToken.uid(40);
+				connection.query(updateToken,[token,email],(error2,results2)=>{
+					console.log(results)
+					res.json({
+						msg: 'loginSuccess',
+						name: results[0].customerName,
+						token: token
+					})
+				})
+			}else{
+				// These arent the droids were looking for.
+				// You don't want to sell me death sticks.
+				// You want to go home and rethink your life. Goodbye
+				res.json({
+					msg: 'wrongPassword'
+				})
+			}
+		}
+	})
 });
 
 router.post('/stripe', (req,res)=>{
-	var userToken = req.body.token;
+	var userToken = req.body.userToken;
 	var stripeToken = req.body.stripeToken;
 	var amount = req.body.amount;
-	// stripe module(imported at top), which is associated with our secret key
+	// stripe module which is associated with our secret key
 	// has a create method, which takes an object of options to charge
 	stripe.charges.create({
-		amount: amount,
+		amount: parseInt(amount),
 		currency: 'usd',
 		source: stripeToken,
-		description: "Charges for classicModels", //you can add all checkout info with a query here if you want
+		description: "Charges for classicmodels",
 	},(error, charge)=>{
 		if(error){
 			res.json({
 				msg: error
 			})
 		}else{
-			// insert stuff from cart that was just paid into:
+			// Insert stuff from cart that was just paid into:
 			// - orders
-			// - orderdetails
+            // -  then orderdetails
 			// then remove it from cart
-
-			const getUser = `SELECT user.uid,productCode,products.buyPrice FROM users 
-			INNER JOIN cart ON users.id = cart.uid
-			INNER JOIN products ON cart.productCode = products.productCode
-			users WHERE token = ?`;
-			connection.query(getUser, [userToken],(error2,results2)=>{
-				const customerId = results[0].uid;
-				const insertIntoOrders =`INSERT INTO orders
-					(orderDate, requiredDate, comments, status, cumstomerNumber)
-					VALUES (?,?,'Website Order','Paid',?)`;
-					connection.query(insertIntoOrders,[Date.now(),Date.now(),customerId],(error3,results3)=>{
+			// have to use 'MAX' bc mysql reads identical user ids and cant decide which one to choose. applying
+			// 'max' tells mysql to choose the largest. (they are all the same so it doesnt matter to us)
+			const getUserQuery = `SELECT MAX(users.id) as id, MAX(users.uid) as uid,cart.productCode,products.buyPrice, COUNT(cart.productCode) as quantity FROM users 
+				INNER JOIN cart ON users.id = cart.uid
+				INNER JOIN products ON cart.productCode = products.productCode
+			WHERE token = ? 
+			GROUP BY cart.productCode`
+			console.log(userToken)
+			console.log(getUserQuery);
+			connection.query(getUserQuery, [userToken], (error2, results2)=>{
+				console.log("==========================")
+				console.log(error2)
+				console.log("==========================")
+				const customerId = results2[0].uid;
+				const insertIntoOrders = `INSERT INTO orders
+					(orderDate,requiredDate,comments,status,customerNumber)
+					VALUES
+					(from_unixtime(`+Math.floor(Date.now()/1000)+`),from_unixtime(`+Math.floor(Date.now()/1000)+`), 'Website Order','Paid',?)`
+				console.log(insertIntoOrders)
+					connection.query(insertIntoOrders,[customerId],(error3,results3)=>{
+						console.log(error3)
 						const newOrderNumber = results3.insertId;
-						// results2 (the select query above) contains an array of rows,
-						// 	each row has the uid, the productCode and the price
-						// 	map through this array, and add each one to the orderdetails
-						results2.map((cartRow)=>{
-							var insertOrderDetails = `INSERT INTO orderdetails
-								(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber)
-								VALUES (?,?,1,?,1)`;
-								connection.query(insertOrderDetail,[newOrderNumber,cartRow.productCode,cartRow.buyPrice],(error4,results4)=>{
-									
-								})
-						})
-					})
+						// results2 (the select query above) contains an array of rows.
+						// Each row has the uid, the productCOde, and the price
+						// map through this array, and add each one to the orderdetails tabl
 
+						// Set up an array to stash our promises inside of
+						// After all the promises have been created, we wil run .all on this thing
+						var orderDetailPromises = [];
+						// Loop through all the rows in results2, which is...
+						// a row for every element in the users cart.
+						// Each row contains: uid, productCode,BuyPrice
+						// Call the one we're on, "cartRow"
+						results2.map((cartRow)=>{
+							// Set up an insert query to add THIS product to the orderdetails table
+							var insertOrderDetail = `INSERT INTO orderdetails
+								(orderNumber,productCode,quantityOrdered,priceEach,orderLineNumber)
+								VALUES
+								(?,?,?,?,1)`
+							// Wrap a promise around our query (because queries are async)
+							// We will call resolve if it succeeds, call reject if it fails
+							// Then, push the promise onto the array above
+							// So that when all of them are finished, we know it's safe to move forward
+
+							const aPromise = new Promise((resolve, reject) => {
+								connection.query(insertOrderDetail,[newOrderNumber,cartRow.productCode,cartRow.quantity, cartRow.buyPrice],(error4,results4)=>{
+									// another row finished.
+									if (error4){
+										reject(error4)
+									}else{
+										resolve(results4)
+									}
+								})
+							});
+							orderDetailPromises.push(aPromise);
+						});
+						// When ALL the promises in orderDetailPromises have called resolve...
+						// the .all function will run. It has a .then that we can use
+						Promise.all(orderDetailPromises).then((finalValues)=>{
+							console.log("All promises finished");
+							console.log(finalValues);
+							const deleteQuery = `
+								DELETE FROM cart WHERE uid = ${results2[0].id}
+							`;
+							connection.query(deleteQuery, (error5, results5)=>{
+								// - orderdetails
+								// Then remove it from cart
+								res.json({
+									msg:'paymentSuccess'
+								})
+							})
+						});
+
+					})
 			});
 
-			res.json({
-				msg: 'paymentSuccess'
-			})
 		}
 	})
-});
+})
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
