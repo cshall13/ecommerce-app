@@ -11,6 +11,7 @@ class NavBar extends Component{
 		}
 	}
 
+	// when you need something on-load, use componentDidMount
 	componentDidMount() {
 		// go get all productlines from the DB.
 		$.getJSON(window.hostAddress+'/productlines/get',(productlinesData)=>{
@@ -51,10 +52,10 @@ class NavBar extends Component{
 			<li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
 			<li key="2" className="text-right">
 				<Link to="/cart">
-					<span className = " glyphicon glyphicon-shopping-cart " aria-hidden =" true " > ({ totalItems }) items | (${totalPrice})</span>
+					<span className = " glyphicon glyphicon-shopping-cart " aria-hidden ="true" > ({ totalItems }) items | (${totalPrice})</span>
 				</Link>
 			</li>,
-			<li key="3" className="text-right"><Link to="/logout">Logout</Link></li>
+			<li key="3" className="text-right"><a href="http://localhost:3001/">Logout</a></li>
 		]		
 	}
 

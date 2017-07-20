@@ -86,7 +86,6 @@ class Cart extends Component{
                 <div className="pay-now">
                     Your order total is: ${this.props.cartInfo.totalPrice}
                     <button className="btn btn-primary" onClick={this.makePayment}>
-                        <span className="glyphicon glyphicon-shopping-cart" aria-hidden="true">Pay Now!</span>
                     </button>
                 </div>
                 {cartArray}
