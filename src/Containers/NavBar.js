@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import $ from 'jquery'
 import {connect} from 'react-redux'
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
+import Cart from 'react-icons/lib/fa/shopping-cart'
 
 class NavBar extends Component{
 	constructor(props) {
@@ -37,57 +39,64 @@ class NavBar extends Component{
   	this.state.productlines.map((pl,index)=>{
   		// console.log(pl);
   		shopMenu.push(
-  			<Link key={index} to={`/shop/${pl.link}`}>{pl.productLine}</Link>
+  			<MenuItem key={index} to={`/shop/${pl.link}`}>{pl.productLine}</MenuItem>
   		)
   	})
 	
 	if(this.props.registerInfo.name === undefined){
 		var rightBar = [
-			<li key="1" className="text-right"><Link to="/login">Login</Link></li>,
-			<li key="2" className="text-right"><Link to="/register">Register</Link></li>,
-			<li key="3" className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>		
+			<NavItem >
+				<Link to="/login">Sign in</Link>
+			</NavItem>,
+			<NavItem >
+				<Link to="/register">Register</Link>
+			</NavItem>,
+			<NavItem >
+				<Link to="/cart"><Cart size={24} /></Link> 0 items | $0
+			</NavItem>
 		]
 	}else{
 		var rightBar = [
-			<li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
-			<li key="2" className="text-right">
-				<Link to="/cart">
-					<span className = " glyphicon glyphicon-shopping-cart " aria-hidden ="true" > ({ totalItems }) items | (${totalPrice})</span>
-				</Link>
-			</li>,
-			<li key="3" className="text-right"><a href="http://localhost:3001/">Logout</a></li>
+			<NavItem >
+				Welcome, {this.props.registerInfo.name}
+			</NavItem>,
+			<NavItem >
+				<a href="http://localhost:3001/">Log Out</a>
+			</NavItem>,
+			<NavItem >
+				<Link to="/cart"><Cart size={24} />&nbsp;{totalItems} items | ${totalPrice}</Link>
+			</NavItem>
 		]		
 	}
 
     return(
     	<div>
-			<nav className="navbar navbar-default navbar-fixed-top">
-			  <div className="container-fluid navbar-white"	>
-			    <ul className="nav navbar-nav">
-			    	<li><Link to="/">Home</Link></li>
-			      	<li className="dropdown">
-			      		<Link to="/shop"><i className="arrow down" /> Shop</Link>
-			      		<ul>
-				      		<li className="dropdown-links">
-				      			{/* Drop in the array of <Link> created above */}
-				      			{shopMenu}
-				      		</li>
-				      	</ul>
-			      	</li>
-			      	<li><Link to="/about">About Us</Link></li>
-			      	<li><Link to="/contact">Contact Us</Link></li>
-			    </ul>
-			  </div>
-			  <div className="container">
-			    <div className="navbar-header">
-			    	<Link to="/" className="navbar-brand">ClassicModels</Link>
-			    </div>
-				   <ul className="nav navbar-nav float-right">
-				   		{rightBar}
-				   </ul>
-			  </div>
-			</nav>
-        </div>
+			<Navbar inverse collapseOnSelect fixedTop>
+				<Navbar.Header>
+					<Navbar.Brand>
+						<Link to="/">ClassicModels</Link>
+					</Navbar.Brand>
+						<Navbar.Toggle />
+					</Navbar.Header>
+					<Navbar.Collapse>
+						<Nav>
+							<NavItem eventKey={1}>
+								<Link to="/about">About Us</Link>
+							</NavItem>
+							<NavItem eventKey={2}>
+								<Link to="/contact">Contact Us</Link>
+							</NavItem>
+							<NavDropdown eventKey={3} title="Shop" id="basic-nav-dropdown">
+								{shopMenu}
+							</NavDropdown>
+						</Nav>
+						<Nav pullRight>
+						{rightBar}
+						</Nav>
+					</Navbar.Collapse>
+				</Navbar>
+	      {/*<Route exact path="/" component={Slick} />*/}
+      </div>
 	)
   }
 }

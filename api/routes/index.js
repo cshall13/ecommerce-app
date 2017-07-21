@@ -247,9 +247,11 @@ router.post('/stripe', (req,res)=>{
 				console.log(error2)
 				console.log("==========================")
 				const customerId = results2[0].uid;
+				const date = Date.now();
 				const insertIntoOrders = `INSERT INTO orders
 					(orderDate,requiredDate,comments,status,customerNumber)
 					VALUES
+					
 					(from_unixtime(`+Math.floor(Date.now()/1000)+`),from_unixtime(`+Math.floor(Date.now()/1000)+`), 'Website Order','Paid',?)`
 				console.log(insertIntoOrders)
 					connection.query(insertIntoOrders,[customerId],(error3,results3)=>{

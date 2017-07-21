@@ -74,7 +74,7 @@ class Register extends Component{
 		if(nextProps.registerResponse.msg === 'userInserted'){
 			this.props.history.push('/');
 		}else if(nextProps.registerResponse.msg === 'userAlreadyExists'){
-			console.log("User name taken!")
+			console.log("User name taken!");
 			this.setState({
 				registerMessage: "Sorry, this username is already taken."
 			})

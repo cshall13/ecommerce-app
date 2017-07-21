@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{bootstrap-DefinitelyTyped, jsx-chai-DefinitelyTyped, node-DefinitelyTyped, react-DefinitelyTyped, react-dom-DefinitelyTyped, react-redux-DefinitelyTyped, reduce-reducers-DefinitelyTyped, redux-action-DefinitelyTyped}" />
+    <file url="PROJECT" libraries="{bootstrap-DefinitelyTyped, jsx-chai-DefinitelyTyped, node-DefinitelyTyped, react-DefinitelyTyped, react-bootstrap-DefinitelyTyped, react-dom-DefinitelyTyped, react-redux-DefinitelyTyped, reduce-reducers-DefinitelyTyped, redux-action-DefinitelyTyped}" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>
