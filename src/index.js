@@ -20,8 +20,6 @@ import reduxPromise from 'redux-promise'; //(npm install --save redux-promise)
 const theStore = applyMiddleware(reduxPromise)(createStore)(RootReducer);
 
 // ReactDOM.render takes 2 args .... 1.what 2.where
-
-
 ReactDOM.render(
     // store is a prop that is passed to 'Provider'
     <Provider store={theStore}>
